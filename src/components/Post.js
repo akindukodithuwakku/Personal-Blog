@@ -1,27 +1,47 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Post() {
+function Post({ title, summary, cover, content, author, createdAt, _id }) {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
   return (
-    <div className="container">
-      <div className="image">
-        <img
-          src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60"
-          alt="blog"
-        />
-      </div>
-      <div className="text">
-        <h2>Welcome to BBlog</h2>
-        <p className="info">
-          <a className="author"> Akindu Kodithuwakku</a>
-          <time>2024-9-3</time>
-        </p>
-        <p className="summary">
-          BBlog is a simple blogging platform where you can write and share your
-          thoughts.
-        </p>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+      <div className="md:flex">
+        <div className="md:flex-shrink-0">
+          {cover && (
+            <img
+              className="h-48 w-full object-cover md:w-48"
+              src={`http://localhost:4000/uploads/${cover}`}
+              alt={title}
+            />
+          )}
+        </div>
+        <div className="p-8">
+          <div className="uppercase tracking-wide text-sm text-indigo-600 font-semibold">
+            {author?.email || 'Anonymous'}
+          </div>
+          <Link to={`/post/${_id}`} className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+            {title}
+          </Link>
+          <p className="mt-2 text-gray-500">
+            {summary}
+          </p>
+          <div className="mt-4">
+            <span className="text-sm text-gray-500">
+              {formatDate(createdAt)}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Post
+export default Post;
