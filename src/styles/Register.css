@@ -38,68 +38,84 @@ body {
 
 /* Register container with centered card */
 .register-container {
-  width: 100%;
-  max-width: 600px;
+  min-height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 50px; /* Adding some space from the navbar */
+  background-color: #f3f4f6;
 }
 
-.register {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.register-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 24rem;
+}
+
+.register-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.error-message {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.register-input {
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
 }
 
-.register h1 {
-  margin-bottom: 10px;
-  font-size: 28px;
-  color: #333;
-  text-align: left; /* Align header to the left */
-}
-
-.register input {
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-}
-
-.register input:focus {
-  border-color: #007bff;
+.register-input:focus {
   outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-.register button {
-  padding: 12px;
-  background-color: #007bff;
-  border: none;
-  border-radius: 10px;
+.register-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #2563eb;
   color: white;
-  font-size: 16px;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.2s;
 }
 
-.register button:hover {
-  background-color: #0056b3;
+.register-button:hover {
+  background-color: #1d4ed8;
+}
+
+.register-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
 .login-link {
+  margin-top: 1rem;
   text-align: center;
-  font-size: 14px;
-  color: #555;
+  color: #4b5563;
 }
 
 .login-link a {
-  color: #007bff;
+  color: #2563eb;
   text-decoration: none;
 }
 

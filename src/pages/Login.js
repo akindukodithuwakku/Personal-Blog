@@ -1,66 +1,83 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate instead of useHistory
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize navigate object for redirection
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // Handle form submission
-  async function login(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Include cookies in the request
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        alert("Login successful!");
-        // Redirect to the home page after successful login
-        navigate("/"); // Using navigate() for redirect
+        navigate("/");
       } else {
-        alert("Login failed. Please try again.");
+        setError(data.error || "Login failed. Please try again.");
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      alert("Login failed. Please try again.");
+      setError("An error occurred. Please try again.");
+      console.error("Login error:", error);
     }
-
-    // Clear the form fields after submission (optional)
-    setEmail("");
-    setPassword("");
-  }
+  };
 
   return (
-    <form className="login" onSubmit={login}>
-      <h1>Login To Blog</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-      <p className="register">
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleLogin} className="login-form">
+        <h1 className="login-title">Login To Blog</h1>
+        
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
+
+        <div className="input-group">
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="login-input"
+          />
+        </div>
+
+        <div className="input-group">
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="login-input"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="login-button"
+        >
+          Login
+        </button>
+
+        <p className="register-link">
+          Don't have an account?{" "}
+          <Link to="/register">Register</Link>
+        </p>
+      </form>
+    </div>
   );
 }
