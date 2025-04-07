@@ -6,22 +6,26 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:4000/profile", {
-      credentials: "include",
-    })
-      .then(response => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/profile", {
+          credentials: "include",
+        });
+        
         if (response.ok) {
-          return response.json();
+          const userData = await response.json();
+          setUserInfo(userData);
+        } else {
+          setUserInfo(null);
         }
-        throw new Error('Not authenticated');
-      })
-      .then(userInfo => {
-        setUserInfo(userInfo);
-      })
-      .catch(err => {
+      } catch (error) {
+        console.error("Error fetching user info:", error);
         setUserInfo(null);
-      });
-  }, []);
+      }
+    };
+
+    fetchUserInfo();
+  }, []); // Empty dependency array means this runs once on mount
 
   const handleLogout = async () => {
     try {
@@ -37,27 +41,35 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
+    <header className="flex justify-between items-center p-4 bg-gray-200 text-white">
       <Link to="/" className="text-xl font-bold">
         BBlog
       </Link>
 
       <nav className="flex gap-4 items-center">
-        <Link to="/" className="hover:text-gray-300">Home</Link>
+        
         {userInfo ? (
           <>
-            <span className="text-gray-300">Welcome, {userInfo.email}</span>
+            <span className="text-gray-600">Welcome, {userInfo.email}</span>
             <button 
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
             >
               Logout
             </button>
+            <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+            <Link to="/create" className="hover:text-gray-300">Create Post</Link>
+            </button>
           </>
         ) : (
           <>
-            <Link to="/login" className="hover:text-gray-300">Login</Link>
+           <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">
+           <Link to="/login" className="hover:text-gray-300">Login</Link>
+            
+            </button> 
+            <button className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">
             <Link to="/register" className="hover:text-gray-300">Register</Link>
+            </button>
           </>
         )}
       </nav>

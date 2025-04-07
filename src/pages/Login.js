@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/Login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,7 +22,8 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/");
+        // Force a reload of the page to update the header
+        window.location.href = "/";
       } else {
         setError(data.error || "Login failed. Please try again.");
       }
@@ -34,48 +34,50 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleLogin} className="login-form">
-        <h1 className="login-title">Login To Blog</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-6 text-center">Login To Blog</h1>
         
         {error && (
-          <div className="error-message">
+          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
             {error}
           </div>
         )}
 
-        <div className="input-group">
+        <div className="mb-4">
           <input
             type="email"
             placeholder="Email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="login-input"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="input-group">
+        <div className="mb-6">
           <input
             type="password"
             placeholder="Password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="login-input"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <button
           type="submit"
-          className="login-button"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Login
         </button>
 
-        <p className="register-link">
+        <p className="mt-4 text-center text-gray-600">
           Don't have an account?{" "}
-          <Link to="/register">Register</Link>
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Register
+          </Link>
         </p>
       </form>
     </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/Register.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -40,59 +39,61 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
-      <form onSubmit={handleRegister} className="register-form">
-        <h1 className="register-title">Create Account</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <form onSubmit={handleRegister} className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
         
         {error && (
-          <div className="error-message">
+          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
             {error}
           </div>
         )}
 
-        <div className="input-group">
+        <div className="mb-4">
           <input
             type="email"
             placeholder="Email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="register-input"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="input-group">
+        <div className="mb-4">
           <input
             type="password"
             placeholder="Password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="register-input"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="input-group">
+        <div className="mb-6">
           <input
             type="password"
             placeholder="Confirm Password"
             required
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="register-input"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <button
           type="submit"
-          className="register-button"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Register
         </button>
 
-        <p className="login-link">
+        <p className="mt-4 text-center text-gray-600">
           Already have an account?{" "}
-          <Link to="/login">Login</Link>
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Login
+          </Link>
         </p>
       </form>
     </div>
