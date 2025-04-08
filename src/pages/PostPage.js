@@ -1,11 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export default function PostPage() {
     const { id } = useParams();
     const [postInfo, setPostInfo] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [userInfo, setUserInfo] = useState(null);
+    
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/profile', {
+                    credentials: 'include',
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserInfo(data);
+                }
+            } catch (err) {
+                console.error('Error fetching user info:', err);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -77,6 +97,18 @@ export default function PostPage() {
                 <div className="font-medium">
                     By {postInfo.author?.email || 'Anonymous'}
                 </div>
+
+                {/* edit post */}
+                {userInfo?.id === postInfo.author?._id && (
+                    <div className="flex items-center gap-2">
+                        <Link 
+                            to={`/edit/${postInfo._id}`}
+                            className="text-blue-500 hover:text-blue-600"
+                        >
+                            Edit Post
+                        </Link>
+                    </div>
+                )}
                 <time className="text-sm">
                     {formatDate(postInfo.createdAt)}
                 </time>
