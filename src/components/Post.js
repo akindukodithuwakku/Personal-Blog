@@ -15,6 +15,7 @@ function Post({ title, summary, cover, content, author, createdAt, _id }) {
     <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
       <div className="md:flex">
         <div className="md:flex-shrink-0">
+          <Link to={`/post/${_id}`}>
           {cover && (
             <img
               className="h-48 w-full object-cover md:w-48"
@@ -22,6 +23,7 @@ function Post({ title, summary, cover, content, author, createdAt, _id }) {
               alt={title}
             />
           )}
+          </Link>
         </div>
         <div className="p-8">
           <div className="uppercase tracking-wide text-sm text-indigo-600 font-semibold">
