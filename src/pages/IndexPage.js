@@ -7,7 +7,9 @@ function IndexPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:4000/post');
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/post`
+        );
         if (response.ok) {
           const postsData = await response.json();
           setPosts(postsData);

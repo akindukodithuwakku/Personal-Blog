@@ -12,9 +12,12 @@ export default function PostPage() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = await fetch('http://localhost:4000/profile', {
-                    credentials: 'include',
-                });
+                const response = await fetch(
+                  `${process.env.REACT_APP_API_URL}/profile`,
+                  {
+                    credentials: "include",
+                  }
+                );
                 if (response.ok) {
                     const data = await response.json();
                     setUserInfo(data);
@@ -30,7 +33,9 @@ export default function PostPage() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/post/${id}`);
+                const response = await fetch(
+                  `${process.env.REACT_APP_API_URL}/post/${id}`
+                );
                 if (!response.ok) {
                     throw new Error('Failed to fetch post');
                 }
@@ -86,7 +91,7 @@ export default function PostPage() {
             <div className="mb-8">
                 {postInfo.cover && (
                     <img 
-                        src={`http://localhost:4000/uploads/${postInfo.cover}`} 
+                        src={`${process.env.REACT_APP_API_URL}/uploads/${postInfo.cover}`} 
                         alt={postInfo.title}
                         className="w-full h-96 object-cover rounded-lg shadow-lg"
                     />

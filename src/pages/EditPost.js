@@ -68,10 +68,12 @@ export default function EditPost() {
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/post/${id}`, {
-                method: 'PUT',
+            const response = await fetch(
+              `${process.env.REACT_APP_API_URL}/post/${id}`,
+              {
+                method: "PUT",
                 body: formData,
-                credentials: 'include',
+                credentials: "include",
             });
 
             if (response.ok) {

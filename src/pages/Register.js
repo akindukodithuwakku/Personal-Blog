@@ -18,12 +18,15 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/register", {
-        method: "POST",
-        body: JSON.stringify({ email, password, confirmPassword }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/register`,
+        {
+          method: "POST",
+          body: JSON.stringify({ email, password, confirmPassword }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 
@@ -40,9 +43,12 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleRegister} className="bg-white p-8 rounded-lg shadow-md w-96">
+      <form
+        onSubmit={handleRegister}
+        className="bg-white p-8 rounded-lg shadow-md w-96"
+      >
         <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
-        
+
         {error && (
           <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
             {error}

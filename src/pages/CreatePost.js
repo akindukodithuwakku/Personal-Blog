@@ -45,10 +45,12 @@ export default function CreatePost() {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/post', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/post`,
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
       });
 
       if (response.ok) {
